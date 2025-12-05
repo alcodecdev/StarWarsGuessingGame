@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Aplicacion Star Wars</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="star-wars-game">
+    <h1 class="game-title">Star Wars Guessing Game</h1>
+
+    <div id="crawl-container">
+        <div id="crawl">
+            <p id="pistas">Introduce un nombre para adivinar el personaje.</p>
+        </div>
+    </div>
+
+    <input type="text" id="guess" placeholder="Escribe tu intento" />
+    <button id="checkBtn">Comprobar</button>
+
+    <div id="resultado"></div>
+
+    <p>Intentos restantes: <span id="intentos">5</span></p>
+    <p>Victorias: <span id="victorias">0</span> | Derrotas: <span id="derrotas">0</span></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

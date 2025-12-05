@@ -1,0 +1,96 @@
+/* Fondo tipo Star Wars: negro con estrellas */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+    background-color: black;
+    color: #ffe81f;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/* Contenedor del juego */
+.star-wars-game {
+    width: 80%;
+    margin: auto;
+}
+
+/* Crawl estilo Star Wars, sin animación */
+#crawl-container {
+    perspective: 500px;
+    height: 200px; /* altura ajustada para ver el texto */
+    overflow: visible; /* antes estaba hidden */
+    margin: 20px auto;
+}
+
+.game-title {
+    font-size: 50px;
+    margin: 20px 0;
+    color: #ffe81f;
+    text-shadow: 0 0 20px #ffe81f;
+    text-align: center;
+}
+
+
+#crawl {
+    position: relative;
+    transform-origin: 50% 100%;
+    transform: rotateX(25deg) translateZ(0);
+    font-size: 20px;
+    line-height: 1.5em;
+    color: #ffe81f;
+    text-align: center;
+    max-width: 600px;
+    margin: auto;
+}
+
+
+/* Input y botón */
+input[type=text] {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 2px solid #ffe81f;
+    margin-right: 10px;
+    width: 300px;
+    background: black;
+    color: #ffe81f;
+}
+
+button {
+    background: #111;
+    color: #ffe81f;
+    border: 2px solid #ffe81f;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #ffe81f;
+    color: #000;
+    box-shadow: 0 0 15px #ffe81f;
+}
+
+/* Resultado */
+#resultado {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#resultado img {
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+#resultado h2 {
+    font-size: 30px;
+    text-shadow: 0 0 10px #ffe81f;
+}
+
+/* Contadores */
+p {
+    font-size: 18px;
+}
