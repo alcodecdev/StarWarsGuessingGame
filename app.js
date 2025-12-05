@@ -17,15 +17,19 @@ $(document).ready(function() {
         $.getJSON(url, function(data) {
             personajeData = data;
 
-            // Inicializamos letras, dejando espacios visibles
-            letrasAdivinadas = data.name.split('').map(c => c === ' ' ? ' ' : '_');
+            // Normalizamos el nombre para eliminar espacios extra al inicio/final y reemplazamos múltiples espacios por uno
+            const nombreNormalizado = data.name.trim().replace(/\s+/g, ' ');
 
-            // Establecemos maxlength del input al total de caracteres (incluyendo espacios)
-            $('#guess').attr('maxlength', data.name.length);
+            // Inicializar letras y espacios correctamente
+            letrasAdivinadas = nombreNormalizado.split('').map(c => c === ' ' ? ' ' : '_');
 
-            // Inicializamos propiedades de planeta y película
+            // Input limitado al total de caracteres (incluyendo espacios)
+            $('#guess').attr('maxlength', nombreNormalizado.length);
+
+            // Inicializar pistas
             personajeData.homeworldName = 'Cargando...';
             personajeData.filmName = 'Cargando...';
+            personajeData.name = nombreNormalizado; // sobrescribimos con nombre normalizado
 
             actualizarPista();
 
@@ -48,11 +52,18 @@ $(document).ready(function() {
     }
 
     function actualizarPista() {
+        // Mostrar letras y espacios correctamente
+        // Cada letra oculta = '_', cada espacio = '   ' (3 espacios para separación visual)
+        let palabra = letrasAdivinadas.map(c => c === ' ' ? '   ' : c).join(' ');
+
+        let longitudLetras = personajeData.name.replace(/\s/g, '').length;
+
         $('#pistas').html(`
-            Nombre a adivinar: ${letrasAdivinadas.join(' ')}<br>
-            Planeta: ${personajeData.homeworldName}<br>
-            Película: ${personajeData.filmName}
-        `);
+        Nombre a adivinar: ${palabra}<br>
+        Longitud del nombre (sin espacios): ${longitudLetras}<br>
+        Planeta: ${personajeData.homeworldName}<br>
+        Película: ${personajeData.filmName}
+    `);
     }
 
     function comprobar() {
@@ -60,33 +71,32 @@ $(document).ready(function() {
 
         if(!guess || !personajeData) return;
 
-        // Validar longitud exacta (incluyendo espacios)
+        // Validar longitud exacta incluyendo espacios
         if(guess.length !== personajeData.name.length){
-            alert(`El nombre debe tener exactamente ${personajeData.name.length} caracteres (incluyendo espacios).`);
+            alert(`El nombre debe tener exactamente ${personajeData.name.length} caracteres, incluyendo espacios.`);
             return;
         }
 
-        // Comparar letra por letra
-        let acierto = false;
+        // Comparar letra por letra y actualizar letrasAdivinadas
         let nombreArray = personajeData.name.split('');
-
         for(let i = 0; i < nombreArray.length; i++){
             if(nombreArray[i].toLowerCase() === guess[i].toLowerCase()){
                 letrasAdivinadas[i] = nombreArray[i];
-                acierto = true;
             }
         }
 
         actualizarPista();
 
-        // Comprobar si se acertó completo
-        if(letrasAdivinadas.join('') === personajeData.name){
+        // Si el intento completo es correcto
+        if(guess.toLowerCase() === personajeData.name.toLowerCase()){
             victorias++;
             $('#victorias').text(victorias);
             mostrarResultado(true);
-        } else if(!acierto){
+        } else {
+            // Intento incorrecto → disminuir intentos
             intentos--;
             $('#intentos').text(intentos);
+
             if(intentos === 0){
                 derrotas++;
                 $('#derrotas').text(derrotas);
@@ -96,6 +106,7 @@ $(document).ready(function() {
 
         $('#guess').val('');
     }
+
 
     function mostrarResultado(acertado){
         $('#resultado').html(`
